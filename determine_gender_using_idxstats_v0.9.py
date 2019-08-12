@@ -131,22 +131,42 @@ if __name__ == '__main__' :
         gender_bed = 'Male'
         print('Xratio_bed-Yratio_bed in:' ,bams_name, 'is', x_y_substract_bed, 'Gender_bed is ', gender_bed)
 
-#Comparation of gender results obtained with both methods:
-if gender == gender_bed:
-    equal_gender_results = True
-else:
-    equal_gender_results = False
-print('Obtained equal gender results: ', equal_gender_results)
+    #Comparation of gender results obtained with both methods:
+    if gender == gender_bed:
+        equal_gender_results = True
+    else:
+        equal_gender_results = False
+    print('Obtained equal gender results: ', equal_gender_results)
 
-#Export results as csv file:
+    #Export results as csv file:
+    
+    outfile = os.path.join(arguments.out, 'gender_results_idxstats.csv')
+    with open( outfile , mode='w') as gender_file:
+        bams_name = bams_name.split('.')
+        bams_name = bams_name[0]
+        gender_results_idxstats = csv.writer(gender_file, delimiter=',')
 
-with open('gender_results.csv', mode='w') as gender_file:
-    gender_results = csv.writer(gender_file, delimiter=',')
+        gender_results_idxstats.writerow(['sample', 'X/Auto', 'Y/Auto' , 'Gender' , 'X/Auto_bed', 'Y/Auto_bed' , 'Gender_bed' , 'Equal_results' ])
+        gender_results_idxstats.writerow([ bams_name , xratio, yratio, gender , xratio_bed, yratio_bed, gender_bed , equal_gender_results ])
 
-    gender_results.writerow(['BAM_file', 'X/Auto', 'Y/Auto' , 'Gender' , 'X/Auto_bed', 'Y/Auto_bed' , 'Gender_bed' , 'Equal_results' ])
-    gender_results.writerow([ bams_name , xratio, yratio, gender , xratio_bed, yratio_bed, gender_bed , equal_gender_results ])
+    with open(outfile) as gender_results_idxstats:
+        dr = csv.DictReader(gender_results_idxstats, delimiter=',')
+        dic_gender_idxstats = {}
+        for row in dr:
 
+            dic_gender_idxstats[row['sample']]={}
+            for key, value in row.items():
+                if not key == 'sample':
+                    
+                    print(key)
+                    dic_gender_idxstats[row['sample']][key] = value
 
-import pandas
-gender_pandas = pandas.read_csv('gender_results.csv')
-print(gender_pandas)
+          
+ 
+    print(dic_gender_idxstats)
+
+'''
+    import pandas
+    gender_pandas = pandas.read_csv(outfile)
+    print(gender_pandas)
+'''
