@@ -149,6 +149,8 @@ if __name__ == '__main__' :
         gender_results_idxstats.writerow(['sample', 'X/Auto', 'Y/Auto' , 'Gender' , 'X/Auto_bed', 'Y/Auto_bed' , 'Gender_bed' , 'Equal_results' ])
         gender_results_idxstats.writerow([ bams_name , xratio, yratio, gender , xratio_bed, yratio_bed, gender_bed , equal_gender_results ])
 
+    #Export results of csv file to Dictionary:
+
     with open(outfile) as gender_results_idxstats:
         dr = csv.DictReader(gender_results_idxstats, delimiter=',')
         dic_gender_idxstats = {}
