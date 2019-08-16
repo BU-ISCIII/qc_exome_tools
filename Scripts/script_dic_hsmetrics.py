@@ -5,9 +5,9 @@ import os
 import csv
 
 def check_arg(args=None):
-    parser = argparse.ArgumentParser(prog = 'script_dic_familypedigree.py',
+    parser = argparse.ArgumentParser(prog = 'script_dic_hsmetrics.py',
                                      formatter_class=argparse.RawDescriptionHelpFormatter, 
-                                     description= 'Dictionary of familypedigree_data from .ped file')
+                                     description= 'Dictionary of hsmetrics_data from hsmetrics.out file')
 
     
     parser.add_argument('-v, --version', action='version', version='v0.1')
@@ -31,7 +31,6 @@ if __name__ == '__main__' :
     found_start=False
     found_value=False
     d[sample]={}
-    print(d)
 
     with open(arguments.input) as hsmetrics_file:
         print('type_file', type(hsmetrics_file))
@@ -46,7 +45,7 @@ if __name__ == '__main__' :
                 continue
             if found_start :
                 keys = line.split('\t')
-                print(keys)
+                #print(keys)
                 found_value=True
                 found_start=False
                 continue
@@ -64,18 +63,19 @@ if __name__ == '__main__' :
                 except (ValueError, TypeError):
                     d[sample][keys[i]]= values[i]
 
-    #print(len(keys), '-', len(values))
+    print(len(keys), '-', len(values))
                 
     print('Dictionary_hsmetrics:' , d)
-'''
+
     #Export dictionary as csv file:
 
     outfile = os.path.join(arguments.out, 'dic_hsmetrics.csv')
-    dic = d #Nested dictionary 
-    headers = list(list (dic.values())[1].keys()) #Encabezado de las columnas
+    dic = d #Nested dictionary
+
+    headers = list(list (dic.values())[0].keys()) #Encabezado de las columnas
     #print (len (headers))
-    #print (dic.values()) 
-        
+    #print (headers)
+      
     with open(outfile, "w") as f:
         w = csv.writer( f )
         
@@ -87,5 +87,4 @@ if __name__ == '__main__' :
             #print (dic.keys())
             w.writerow([sample] + [dic[sample][parameter] for parameter in parameters])
 
-'''
 
