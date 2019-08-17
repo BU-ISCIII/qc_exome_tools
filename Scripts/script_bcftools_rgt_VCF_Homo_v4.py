@@ -34,6 +34,8 @@ with open(file_path) as stats:
         
             
 print('Dictionary_VCFstats_ChrX :' , d)
+
+
 import csv
 #Determine gender using SNP Het/Homo ratio of Chrx VCF stats:
 Het_Homo_ratio_str = None
@@ -61,20 +63,18 @@ with open( outfile , mode='w') as gender_file:
                     gender = 'Female'
                     print(sample, gender)
                     gender_results_homo.writerow([ sample , ratio_number, gender])
+
 with open(outfile) as gender_homo:
     dr = csv.DictReader(gender_homo, delimiter=',')
     dic_gender_homo = {}
     for row in dr:
-
         dic_gender_homo[row['sample']]={}
         for key, value in row.items():
             if not key == 'sample':
-                    
+                
                 print(key)
                 dic_gender_homo[row['sample']][key] = value
 
-          
- 
 print(dic_gender_homo)
     
 

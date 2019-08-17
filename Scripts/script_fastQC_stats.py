@@ -5,12 +5,14 @@ import re
 import pandas as pd
 import glob
 
-path = "D:/Users/smonzon/Desktop/Documentos_Sara/Pipeline/03-preprocQC/"
-#sample_list = []#listado de los nombres de las muestras
-#tmp = os.listdir (path)#listaria ficheros y directorios 
-#print
+path = "/home/masterbioinfo/EXOME/Data/fastqc/"
+sample_list = []#listado de los nombres de las muestras
+sample_list = os.listdir (path)#listaria ficheros y directorios 
+print(sample_list)
+
+
 def fastqc_dict (file):
-    step = '03-preprocQC_'
+    step = 'preFastQC_'
     qc_dict = {}
     header = False
     with open (file, 'r') as fd:
@@ -25,15 +27,14 @@ def fastqc_dict (file):
                 qc_dict[step + line[0]] = line[1]
             if m:
                 header = True
-    
     return qc_dict
-'''              
+
+#fastqc_dict('/home/masterbioinfo/EXOME/Data/fastqc/ND0801/ND0801_R1_fastqc/fastqc_data.txt')
+
+
 fastq_all = {}
 
 for sample in sample_list:
-    file_name = os.path.join (path,sample,sample+"_R1_filtered_fastqc","fastqc_data.txt")#Crear una variable de path, recordar separar por comas
+    file_name = os.path.join (path,sample,sample+"_R1_fastqc","fastqc_data.txt")#Crear una variable de path, recordar separar por comas
     fastq_all[sample] = fastqc_dict (file_name)
-
-
 print (fastq_all)#nested dict
-'''
