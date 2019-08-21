@@ -2,9 +2,9 @@
 import sys
 import pysam
 import os
-import concurrent.futures as cfutures
-import glob
-import matplotlib.pyplot as plt
+#import concurrent.futures as cfutures
+#import glob
+#import matplotlib.pyplot as plt
 import statistics
 import argparse
 import csv
