@@ -68,9 +68,9 @@ if __name__ == '__main__' :
             file_name = os.path.join (path,sample,sample+"_"+step,"fastqc_data.txt")#Crear una variable de path, recordar separar por comas
             if os.path.exists(file_name)== False:
                 print(file_name, 'false')
-                break
-            if os.path.exists(file_name)== True:
-                print('path exists' , os.path.exists(file_name))
+                continue
+            else:
+                print('path exists' , file_name)
                 dic_tmp = fastqc_dict (file_name,step)
                 if not dic_fastqc_pre[sample]:
                     dic_fastqc_pre[sample] = dic_tmp
@@ -78,7 +78,7 @@ if __name__ == '__main__' :
                     #dic_fastqc_pre[sample] = {**dic_fastqc_pre[sample],**dic_tmp} 
                     dic_fastqc_pre[sample].update(dic_tmp)
                         
-    #print ('Dic_fastqc_pre', dic_fastqc_pre)#nested dict
+    print ('Dic_fastqc_pre', dic_fastqc_pre)#nested dict
 
     #Dictionary of fastqc data post_trimming:
 
@@ -91,8 +91,8 @@ if __name__ == '__main__' :
             file_name = os.path.join (path,sample,sample+"."+step,"fastqc_data.txt")#Crear una variable de path, recordar separar por comas
             if os.path.exists(file_name)== False:
                 print('path_file does not exist: ' ,file_name)
-                break
-            if os.path.exists(file_name)== True:
+                continue
+            else:
                 print('path exists:' , file_name)
                 dic_tmp_trim = fastqc_dict (file_name,step)
                 if not dic_fastqc_trimmed[sample]:
