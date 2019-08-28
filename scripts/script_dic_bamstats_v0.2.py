@@ -2,19 +2,20 @@ import re
 import argparse
 import sys
 import os
+import re
 import csv
 import glob
 
-# Definition of required arguments (input_file path , output path) with argparse module: 
+# Definition of required arguments (input_file path , output path) with argparse module:
 def check_arg(args=None):
     parser = argparse.ArgumentParser(prog = 'script_dic_bamstats_v0.2.py',
-                                     formatter_class=argparse.RawDescriptionHelpFormatter, 
+                                     formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description= 'Dictionary of bamstats from file: SAMPLE_bamstats.txt')
 
-    
+
     parser.add_argument('-v, --version', action='version', version='v0.2')
-    parser.add_argument('--input', required= True, nargs='+' , 
-                                    help = 'Directory where SAMPLE_bamstats.txt files are stored.')
+    parser.add_argument('--input', required= True, nargs='+' ,
+                                    help = 'Bamstat.txt files')
     parser.add_argument('--out',  required= True,
                                     help = 'csv file name incluiding path where the csv file will be stored.')
 
@@ -36,7 +37,7 @@ if __name__ == '__main__' :
         #print('sample:', sample)
         found_start=False
         d[sample]={}
-        print('Dictionary samples', d)
+        #print('Dictionary samples', d)
 
 
         with open(file) as bamstats_file:
@@ -52,28 +53,32 @@ if __name__ == '__main__' :
                     continue
                 if found_start :
                     line = line.split('\t')
-                    key=line[0]
-                    value=float(line[1])
+                    if not re.search('(.*\(e6\)|.*\(%\))$',line[0]):
+                        key=line[0]+'(e6)'
+                        value=float(line[1])/1000000
+                    else:
+                        key=line[0]
+                        value=float(line[1])
                     d[sample]['bamstats_'+ key]= value
-        
-        print('Dictionary_Bamstats:' , d)
-        
+
+        print('Dictionary_Bamstats done.')
+
         #Export dictionary as csv file:
 
         outfile = arguments.out
-        dic = d #Nested dictionary 
+        dic = d #Nested dictionary
         headers = list(list (dic.values())[0].keys()) #Encabezado de las columnas
         #print (len (headers))
-        #print (dic.values()) 
-            
-        with open(outfile, "w") as f:
-            w = csv.writer( f )
-            
-            w.writerow(['sample'] + headers)# printea la primera fila
-            
-            parameters = list(list (dic.values())[0].keys())
-            #print (parameters)
-            for sample in dic.keys():
-                #print (dic.keys())
-                w.writerow([sample] + [dic[sample][parameter] for parameter in parameters])
+        #print (dic.values())
+
+    with open(outfile, "w") as f:
+        w = csv.writer( f )
+        print(dic)
+        w.writerow(['sample'] + headers)# printea la primera fila
+
+        parameters = list(list (dic.values())[0].keys())
+        print (parameters)
+        for sample in dic.keys():
+            print (sample)
+            w.writerow([sample] + [dic[sample][parameter] for parameter in parameters])
 
