@@ -5,14 +5,14 @@ import glob
 import os
 import csv
 
-# Definition of required arguments (input_file path , output path) with argparse module: 
+# Definition of required arguments (input_file path , output path) with argparse module:
 
 def check_arg(args=None):
     parser = argparse.ArgumentParser(prog = 'script_dic_hsmetrics_v0.2.py',
-                                     formatter_class=argparse.RawDescriptionHelpFormatter, 
+                                     formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description= 'Dictionary of hsmetrics_data from hsmetrics.out file')
 
-    
+
     parser.add_argument('-v, --version', action='version', version='v0.2')
     parser.add_argument('--input', required= True, nargs="+",
                                     help = 'Directory where hsMetrics.out files are stored.')
@@ -59,10 +59,10 @@ if __name__ == '__main__' :
                     break
             hs_keys = ["hsMetrics_" + key for key in keys ]
             print('hskeys', hs_keys)
-           
+
             for i in range(len(hs_keys)):
                 d[sample][hs_keys[i]]= values[i]
-                
+
                 #convert string to numbers
                 for val in d[sample][hs_keys[i]] :
                     try:
@@ -71,7 +71,7 @@ if __name__ == '__main__' :
                         d[sample][hs_keys[i]]= values[i]
 
         #print(len(hs_keys), '-', len(values))
-                    
+
         print('Dictionary_hsmetrics:' , d)
 
         #Export dictionary as csv file:
@@ -82,16 +82,16 @@ if __name__ == '__main__' :
         headers = list(list (dic.values())[0].keys()) #Encabezado de las columnas
         #print (len (headers))
         #print (headers)
-        
-        with open(outfile, "w") as f:
-            w = csv.writer( f )
-            
-            w.writerow(['sample'] + headers)# printea la primera fila
-            
-            parameters = list(list (dic.values())[0].keys())
-            #print (parameters)
-            for sample in dic.keys():
-                #print (dic.keys())
-                w.writerow([sample] + [dic[sample][parameter] for parameter in parameters])
+
+    with open(outfile, "w") as f:
+        w = csv.writer( f )
+
+        w.writerow(['sample'] + headers)# printea la primera fila
+
+        parameters = list(list (dic.values())[0].keys())
+        #print (parameters)
+        for sample in dic.keys():
+            #print (dic.keys())
+            w.writerow([sample] + [dic[sample][parameter] for parameter in parameters])
 
 
