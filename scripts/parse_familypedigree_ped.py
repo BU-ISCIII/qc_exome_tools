@@ -28,7 +28,7 @@ def check_arg(args=None):
         parser.parse_args() # Parsed arguments
     '''
 
-    parser = argparse.ArgumentParser(prog = 'script_dic_familypedigree.py',
+    parser = argparse.ArgumentParser(prog = 'parse_familypedigree_ped.py',
                                      formatter_class=argparse.RawDescriptionHelpFormatter, 
                                      description= 'Dictionary of familypedigree_data from .ped file')
 
