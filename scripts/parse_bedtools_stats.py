@@ -130,7 +130,7 @@ if __name__ == '__main__' :
     arguments = check_arg(sys.argv[1:])
     print('Arguments used: ' , arguments)
     
-    #Dictionary of hsMetrics.out data:
+    #Dictionary of bedtools_stats from file: exons_not_covered_stats.csv:
     
     dic_bedtools_all = bedtools_dictionary(arguments.input)
     
