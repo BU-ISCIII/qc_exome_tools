@@ -6,32 +6,59 @@ import re
 import csv
 import glob
 
-# Definition of required arguments (input_file path , output path) with argparse module:
+
+######################
+##Function_Arguments##
+######################
+ 
+
 def check_arg(args=None):
-    parser = argparse.ArgumentParser(prog = 'script_dic_bamstats_v0.2.py',
+
+    '''
+	Description:
+        Function collect arguments from command line using argparse
+    Input:
+        args # command line arguments
+    Constant:
+        None
+    Variables
+        parser
+    Return
+        parser.parse_args() # Parsed arguments
+    '''
+    parser = argparse.ArgumentParser(prog = 'parse_bamstats.py',
                                      formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description= 'Dictionary of bamstats from file: SAMPLE_bamstats.txt')
 
 
     parser.add_argument('-v, --version', action='version', version='v0.2')
     parser.add_argument('--input', required= True, nargs='+' ,
-                                    help = 'Bamstat.txt files')
+                                    help = 'Bamstat.txt files including path where are stored.')
     parser.add_argument('--out',  required= True,
                                     help = 'csv file name incluiding path where the csv file will be stored.')
 
     return parser.parse_args()
 
-if __name__ == '__main__' :
 
-    arguments = check_arg(sys.argv[1:])
-    print('Arguments used: ' , arguments)
-    #files_out = [os.path.realpath(path) for path in glob.glob(arguments.input + '/*bamstat.txt')]
-    #print('files' , files_out)
+########################
+##Function_Dictionary ##
+########################
 
-    #Dictionary of bamstat.txt data:
+def bamstats_dictionary (bamstat_txt):
+
+    '''
+    Description:
+     'Dictionary of bamstats from file: SAMPLE_bamstats.txt'
+    
+    Input:
+     'Bamstat.txt files including path where are stored.' 
+    
+    Return:
+      d (dictionary)
+           
+    ''' 
     d={}
-    for file in arguments.input:
-        #bamstats_path ="/home/masterbioinfo/EXOME/Data/ND0801_bamstat.txt"
+    for file in bamstat_txt:
         sample = (os.path.basename(file)).split('_')
         sample = sample[0]
         #print('sample:', sample)
@@ -39,9 +66,7 @@ if __name__ == '__main__' :
         d[sample]={}
         #print('Dictionary samples', d)
 
-
         with open(file) as bamstats_file:
-            #print('type_file', type(bamstats_file))
 
             for line in bamstats_file:
                 line=line.strip('\n')
@@ -49,7 +74,7 @@ if __name__ == '__main__' :
                     continue
                 if 'Number of records' in line :
                     found_start = True
-                    print('encuentre start:' , found_start)
+                    print('found_start:' , found_start)
                     continue
                 if found_start :
                     line = line.split('\t')
@@ -60,25 +85,81 @@ if __name__ == '__main__' :
                         key=line[0]
                         value=float(line[1])
                     d[sample]['bamstats_'+ key]= value
+    
+    #print('Dictionary_Bamstats done.')
+    return(d)    
+    
 
-        print('Dictionary_Bamstats done.')
+######################
+##Function_Dic2CSV  ##
+######################   
 
-        #Export dictionary as csv file:
+def dictionary2csv (dictionary, csv_file):
 
-        outfile = arguments.out
-        dic = d #Nested dictionary
-        headers = list(list (dic.values())[0].keys()) #Encabezado de las columnas
-        #print (len (headers))
-        #print (dic.values())
+    '''
 
-    with open(outfile, "w") as f:
-        w = csv.writer( f )
-        print(dic)
-        w.writerow(['sample'] + headers)# printea la primera fila
+    Description:
+        Function to create a csv from a dictionary
+    Input:
+        dictionary
+    Return:
+        csv file
 
-        parameters = list(list (dic.values())[0].keys())
-        print (parameters)
-        for sample in dic.keys():
-            print (sample)
-            w.writerow([sample] + [dic[sample][parameter] for parameter in parameters])
+   '''
+
+    header = sorted(set(i for b in map(dict.keys, dictionary.values()) for i in b))
+    with open(csv_file, 'w', newline="") as f:
+        write = csv.writer(f)
+        write.writerow(['sample', *header])
+        for a, b in dictionary.items():
+            write.writerow([a]+[b.get(i, '') for i in header])
+
+
+
+
+
+##########
+## MAIN ##
+########## 
+   
+if __name__ == '__main__' :
+
+    
+    #Arguments: 
+    
+    '''
+    Example arguments:
+    
+    --input /home/masterbioinfo/EXOME/Data/bamstats/*.txt
+    --out /home/masterbioinfo/EXOME/Results/dic_bamstats_all.csv
+    '''
+    
+    arguments = check_arg(sys.argv[1:])
+    print('Arguments used: ' , arguments)
+
+
+    #Dictionary of bamstats:
+    
+    dic_bamstats_all = bamstats_dictionary(arguments.input)
+    
+    print ('bamstats_dictionary done')
+    #print (dic_bamstats_all)
+    
+    
+    #Export dictionary as csv file:
+    
+    dictionary2csv (dic_bamstats_all, arguments.out)
+
+    print ('bamstats_csv done')
+    
+    '''
+    #Visualize CSV file using pandas:
+     
+    import pandas
+    panda_file = pandas.read_csv(arguments.out)
+    print(panda_file)
+    
+    '''
+    
+    
 
