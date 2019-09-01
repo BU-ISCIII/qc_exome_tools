@@ -4,10 +4,27 @@ import sys
 import os
 import csv
 
-# Definition of required arguments (input_file path , output path) with argparse module: 
+
+######################
+##Function_Arguments##
+######################
+ 
 
 def check_arg(args=None):
-    parser = argparse.ArgumentParser(prog = 'script_dic_bedtools_stats.py',
+
+    '''
+	Description:
+        Function collect arguments from command line using argparse
+    Input:
+        args # command line arguments
+    Constant:
+        None
+    Variables
+        parser
+    Return
+        parser.parse_args() # Parsed arguments
+    '''
+    parser = argparse.ArgumentParser(prog = 'parse_bedtools_stats.py',
                                      formatter_class=argparse.RawDescriptionHelpFormatter, 
                                      description= 'Dictionary of bedtools_stats from file: exons_not_covered_stats.csv')
 
@@ -20,15 +37,27 @@ def check_arg(args=None):
 
 
     return parser.parse_args()
-if __name__ == '__main__' :
+    
+########################
+##Function_Dictionary ##
+########################
 
-    arguments = check_arg(sys.argv[1:])
-    print('Arguments used: ' , arguments)
+def bedtools_dictionary (files_input):
 
-   #Dictionary of Bedtools file (exons_not_covered_stats.csv) data:
+    '''
+    Description:
+     'Dictionary of bedtools_stats from file: exons_not_covered_stats.csv'
+    
+    Input:
+     'exons_not_covered_stats.csv files including path where is stored.' 
+    
+    Return:
+      d (dictionary)
+           
+    ''' 
     d={}
-    heather=False
-    for file in arguments.input:
+    header=False
+    for file in files_input:
         with open(file) as bedstats_file:
 
             for line in bedstats_file:
@@ -36,11 +65,11 @@ if __name__ == '__main__' :
                 if len(line) == 0 :
                     continue
                 if 'exons' in line :
-                    heather = True
-                    print('encuentre sample:' , heather)
+                    header = True
+                    print('found_header:' , header)
                     continue
 
-                if heather :
+                if header :
                     line = line.split('\t')
                     sample = line[0].split('.')
                     sample = sample[0]
@@ -51,24 +80,78 @@ if __name__ == '__main__' :
                     d[sample][step + 'exons_below_20']= float(line[1])
                     d[sample][step + 'fr_covered']= float(line[2])
                     d[sample][step + 'fr_NOT_covered']= float(line[3])
-        print(d)
-        
+    return(d)
 
-        #Export dictionary as csv file:
 
-        outfile = arguments.out
-        dic = d #Nested dictionary 
-        headers = list(list (dic.values())[1].keys()) #Encabezado de las columnas
-        #print (len (headers))
-        #print (dic.values()) 
-            
-        with open(outfile, "w") as f:
-            w = csv.writer( f )
-            
-            w.writerow(['sample'] + headers)# printea la primera fila
-            
-            parameters = list(list (dic.values())[0].keys())
-            #print (parameters)
-            for sample in dic.keys():
-                #print (dic.keys())
-                w.writerow([sample] + [dic[sample][parameter] for parameter in parameters])
+######################
+##Function_Dic2CSV  ##
+######################   
+
+def dictionary2csv (dictionary, csv_file):
+
+    '''
+
+    Description:
+        Function to create a csv from a dictionary
+    Input:
+        dictionary
+    Return:
+        csv file
+
+   '''
+
+    header = sorted(set(i for b in map(dict.keys, dictionary.values()) for i in b))
+    with open(csv_file, 'w', newline="") as f:
+        write = csv.writer(f)
+        write.writerow(['sample', *header])
+        for a, b in dictionary.items():
+            write.writerow([a]+[b.get(i, '') for i in header])
+
+
+
+
+
+##########
+## MAIN ##
+########## 
+   
+if __name__ == '__main__' :
+
+    
+    #Arguments: 
+    
+    '''
+    Example arguments:
+    
+    --input /home/masterbioinfo/EXOME/Data/bedtools/*.csv
+    --out /home/masterbioinfo/EXOME/Results/dic_bedtools_all.csv
+    '''
+    
+    arguments = check_arg(sys.argv[1:])
+    print('Arguments used: ' , arguments)
+    
+    #Dictionary of hsMetrics.out data:
+    
+    dic_bedtools_all = bedtools_dictionary(arguments.input)
+    
+    print ('bedtools_dictionary done')
+    #print (dic_bedtools_all)
+    
+    
+    #Export dictionary as csv file:
+    
+    dictionary2csv (dic_bedtools_all, arguments.out)
+
+    print ('bedtools_csv done')
+    
+    
+    '''
+    #Visualize CSV file using pandas:
+     
+    import pandas
+    panda_file = pandas.read_csv(arguments.out)
+    print(panda_file)
+    
+    '''
+    
+ 
