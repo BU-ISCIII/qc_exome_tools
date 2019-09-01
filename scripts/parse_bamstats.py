@@ -44,7 +44,7 @@ def check_arg(args=None):
 ##Function_Dictionary ##
 ########################
 
-def bamstats_dictionary (bamstat_txt):
+def bamstats_dictionary (bamstat_input):
 
     '''
     Description:
@@ -58,7 +58,7 @@ def bamstats_dictionary (bamstat_txt):
            
     ''' 
     d={}
-    for file in bamstat_txt:
+    for file in bamstat_input:
         sample = (os.path.basename(file)).split('_')
         sample = sample[0]
         #print('sample:', sample)
