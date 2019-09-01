@@ -5,15 +5,35 @@ import os
 import csv
 import subprocess
 
+
+######################
+##Function_Arguments##
+######################
+ 
+
 def check_arg(args=None):
-    parser = argparse.ArgumentParser(prog = 'script_dic_rgt_VCF_stats.py',
+
+    '''
+	Description:
+        Function collect arguments from command line using argparse
+    Input:
+        args # command line arguments
+    Constant:
+        None
+    Variables
+        parser
+    Return
+        parser.parse_args() # Parsed arguments
+    '''
+
+    parser = argparse.ArgumentParser(prog = 'parse_rtg_vcfstats.py',
                                      formatter_class=argparse.RawDescriptionHelpFormatter, 
-                                     description= 'Dictionary of rgt_VCF_stats from file: all_samples_gtpos_fil_annot.vcf')
+                                     description= 'Dictionary of rtg_VCF_stats from file: all_samples_gtpos_fil_annot.vcf')
 
     
     parser.add_argument('-v, --version', action='version', version='v0.2')
     parser.add_argument('--input', required= True, nargs='+',
-                                    help = 'all_samples_gtpos_fil_annot.vcf files including path where is stored.')
+                                    help = 'all_samples_gtpos_fil_annot.vcf files including path where are stored.')
     
     parser.add_argument('--out',  required= True,
                                     help = 'csv file name incluiding path where the csv file will be stored.')
@@ -21,20 +41,33 @@ def check_arg(args=None):
 
     return parser.parse_args()
 
-if __name__ == '__main__' :
 
-    arguments = check_arg(sys.argv[1:])
-    print('Arguments used: ' , arguments)
+##################################
+##Function_VCF_Stats_Dictionary ##
+##################################
 
+def rtg_vcfstats_dictionary (vcf_input):
 
+    '''
+    Description:
+     #Necessary rtg-tools==3.10.1 (Install Conda environment for QC_Exome Tools: qc_exome_tools.yml)
+     'Obtain vcf statistics using rtg-tools from vcf files and return a Dictionary of rtg_VCF_stats '
+    
+    Input:
+    'all_samples_gtpos_fil_annot.vcf files including path where are stored.'
+    
+    Return:
+      d (dictionary)
+           
+    '''  
+      
     d={}
-    for file in arguments.input:
+    for file in vcf_input:
 
-        #Run bash script for rtg vcfstats:
+        #Obtain rtg vcfstats from:
 
         found_samplename=False
         cmd = ["rtg" , "vcfstats"]
-        #parametro = [' /home/masterbioinfo/EXOME/Data/VCF/ND0800/all_samples_gtpos_fil_annot.vcf']
         parametro = [file]
         cmd.extend(parametro)
         cmd2 = ' '.join(cmd)
@@ -44,7 +77,7 @@ if __name__ == '__main__' :
         #Dictionary of rtg vcfstats results for each sample:
 
         stats = stats.split('\n')
-        print(stats)
+        #print(stats)
 
         for line in stats:
             
@@ -52,10 +85,10 @@ if __name__ == '__main__' :
                 continue
             if 'Sample' in line :
                 found_samplename = True
-                print('encuentre sample:' , found_samplename)
+                print('found_sample:' , found_samplename)
                 line = line.split(':')
                 sample = line[1].strip()
-                print(sample)
+                #print(sample)
                 d[sample] = {}
                 continue
             if found_samplename :
@@ -68,32 +101,78 @@ if __name__ == '__main__' :
                 if '-'  in data:
                     data = '0'
                 d[sample]['rtg_vcfstats_' + key]=  float(data) 
-                
-    print('Dictionary_VCFstats :' , d)
     
-    #Export dictionary as csv file:
+    return(d)
+    
+######################
+##Function_Dic2CSV  ##
+######################   
 
-    dic = d
-    outfile = arguments.out
-    header = sorted(set(i for b in map(dict.keys, dic.values()) for i in b))
-    with open(outfile, 'w', newline="") as f:
+def dictionary2csv (dictionary, csv_file):
+
+    '''
+
+    Description:
+        Function to create a csv from a dictionary
+    Input:
+        dictionary
+    Return:
+        csv file
+
+   '''
+
+    header = sorted(set(i for b in map(dict.keys, dictionary.values()) for i in b))
+    with open(csv_file, 'w', newline="") as f:
         write = csv.writer(f)
         write.writerow(['sample', *header])
-        for a, b in dic.items():
+        for a, b in dictionary.items():
             write.writerow([a]+[b.get(i, '') for i in header])
 
+
+
+
+
+##########
+## MAIN ##
+########## 
+   
+if __name__ == '__main__' :
+
+    
+    #Arguments: 
+    
+    '''
+    Example arguments:
+    
+    --input /home/masterbioinfo/EXOME/Data/VCF/*_all_samples_gtpos_fil_annot.vcf
+    --out /home/masterbioinfo/EXOME/Results/dic_rtg_vcfstats_all.csv
+    '''
+    
+    arguments = check_arg(sys.argv[1:])
+    print('Arguments used: ' , arguments)
+
+    
+    #Dictionary of rtg_VCF_stats:
+    
+    dic_rtg_vcfstats_all = rtg_vcfstats_dictionary(arguments.input)
+    
+    print ('rtg_vcfstats_dictionary done')
+    #print (dic_rtg_vcfstats_all)
+    
+    
+    #Export dictionary as csv file:
+    
+    dictionary2csv (dic_rtg_vcfstats_all, arguments.out)
+
+    print ('rtg_vcfstats_csv done')
+    
+'''   
     #Visualize CSV file using pandas:
      
     import pandas
-    gender_pandas = pandas.read_csv(outfile)
-    print(gender_pandas)
-
-
-
-
-
-
-
+    panda_file = pandas.read_csv(arguments.out)
+    print(panda_file)
+'''    
 
 
 
