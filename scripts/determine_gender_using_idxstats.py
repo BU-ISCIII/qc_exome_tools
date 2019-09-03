@@ -23,7 +23,7 @@ def check_arg(args=None):
     parser.add_argument('--bed', required= True,
                                     help = 'Bed file including path where is stored.')
     parser.add_argument('--out',  required= True,
-                                    help = 'Directory where the result files will be stored.')
+                                    help = 'csv file name incluiding path where the csv file will be stored.')
 
 
     return parser.parse_args()
@@ -35,14 +35,6 @@ if __name__ == '__main__' :
     arguments = check_arg(sys.argv[1:])
     print('Arguments used: ' , arguments)
 
-    
-
-    #sample = os.path.basename(arguments.bam)
-    #print ('BAM file name: ', sample)
-
-    #bams = [os.path.realpath(path) for path in glob.glob(arguments.bam + '/*.bam')]
-    #print (bams)
-    
     
     #Calculate the number of total_bases and each chrom_bases from the exome targets of the BED file
     #and Remove prefix 'chr' form chromosome number: 
@@ -57,15 +49,13 @@ if __name__ == '__main__' :
             field[0]=field[0].strip('chr')
             total_bases += (int(field[2])-int(field[1]))
             chrom_bases[field[0]] += (int(field[2])-int(field[1]))
-        print('total_bases', total_bases )
-        print('dicc de chrom_bases', chrom_bases)	
+        #print('total_bases', total_bases )
+        #print('dicc de chrom_bases', chrom_bases)	
 
 
     #Obtain reads with idxstats and normalized with (A) Chrom_Length_idxstats or (B) Bed_targets 
          
-    
     d = {}
-    d_temp ={}
     for bam in arguments.bam:
         norm_reads=[]                   #normalized with (A) Chrom_Length
         norm_reads_bed=[]               #normalized with (B) Bed_targets_length
@@ -101,8 +91,8 @@ if __name__ == '__main__' :
             
                     
 
-        print('norm_reads' , norm_reads)
-        print('norm_reads_bed:', norm_reads_bed)
+        #print('norm_reads' , norm_reads)
+        #print('norm_reads_bed:', norm_reads_bed)
 
         #Calculate Xratio, Yratio, Mean_Auto using normalized reads with Chrom_Length_idxstats
         print ('Calculate Xratio, Yratio, Mean_Autosomic using normalized reads with Chrom_Length_idxstats:')
@@ -160,8 +150,7 @@ if __name__ == '__main__' :
             d[sample][parameters[i]]= values[i]
             print(d[sample][parameters[i]])
             i=+1
-            #d[sample] = {**d[sample],**d_temp}
-            #d[sample].update(d_temp)
+        
            
     print(d)
 
@@ -176,6 +165,7 @@ if __name__ == '__main__' :
         for a, b in dic.items():
             write.writerow([a]+[b.get(i, '') for i in header])
 
+    #Visualize CSV file using pandas:
 
     import pandas
     gender_pandas = pandas.read_csv(outfile)
