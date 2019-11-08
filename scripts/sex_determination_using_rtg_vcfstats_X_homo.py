@@ -8,12 +8,12 @@ import subprocess
 #Necessary: bcftools==1.9  and rtg-tools==3.10.1 (Install Conda environment for QC_Exome Tools: qc_exome_tools.yml)
 
 def check_arg(args=None):
-    parser = argparse.ArgumentParser(prog = 'script_dic_rgt_VCF_stats.py',
+    parser = argparse.ArgumentParser(prog = 'sex_determination_using_rtg_vcfstats_x_homo.py',
                                      formatter_class=argparse.RawDescriptionHelpFormatter, 
-                                     description= 'Dictionary of rgt_VCF_stats from file: all_samples_gtpos_fil_annot.vcf')
+                                     description= 'Determine genetic sex from vcf file using rtg vcfstats to obtain ChrX homozygosity')
 
     
-    parser.add_argument('-v, --version', action='version', version='v0.2')
+    parser.add_argument('-v, --version', action='version', version='v0.0')
     parser.add_argument('--input', required= True, nargs='+',
                                     help = 'vcf files including path where are stored.')
     
@@ -55,6 +55,18 @@ if __name__ == '__main__' :
         rgt_stats_chrx = subprocess.getoutput(str(' '.join(cmd4)))
         print(' '.join(cmd4))
         #print(rgt_stats_chrx)
+        
+        #Obtain sample name from vcf files* 
+        #(*necessary when vcfstats are obtained from vcf files with only one sample):
+
+        parameter = [file]
+        cmd_name = ["bcftools" , "query" , "-l"]
+        cmd_name.extend(parameter)
+        cmd_name2 = ' '.join(cmd_name)
+        print(cmd_name2)
+        name = subprocess.getoutput(cmd_name2)
+        print('sample names:', name)
+        name = name.split('\n')
 
         #Dictionary of VCF stats of ChrX 
 
@@ -73,7 +85,17 @@ if __name__ == '__main__' :
                 name = line[1].strip()
                 print(name)
                 d[name] = {}
-                continue
+                continue 
+                
+            elif 'Passed Filters' in line :
+                sample = name[0]
+                print('number of vcf samples:', len(name))
+                if len(name) == 1 :
+                    print(sample)
+                    d[sample] = {}
+                    found_samplename = True
+                    print('found sample_unique:' , found_samplename)     
+                    continue
             if found_samplename :
                 line = line.split(':')
                 key=line[0].rstrip()
@@ -129,50 +151,12 @@ if __name__ == '__main__' :
         for a, b in dic.items():
             write.writerow([a]+[b.get(i, '') for i in header])
 
+'''
     #Visualize CSV file using pandas:
 
     import pandas
     gender_pandas = pandas.read_csv(outfile)
     print(gender_pandas)
-
-
-''''
-        outfile = arguments.out
-        
-        with open( outfile , mode='w') as gender_file:
-            gender_results_homo = csv.writer(gender_file, delimiter=',')
-            gender_results_homo.writerow(['sample', 'Gender_HomoChrX_SNP Het/Hom ratio', 'Gender_HomoChrX_Gender' ])
-            for sample , stats in d.items():
-                #print("\nSample:", sample)
-                for item in stats:
-                    if 'SNP Het/Hom ratio' in item :
-                        print(item + ':', stats[item])
-                        ratio_str = stats[item]
-                        ratio_str = ratio_str.split(' ')
-                        ratio_number = float(ratio_str[0])
-
-                        if ratio_number < 1.2 :
-                            gender = 'Male'
-                            print(sample, gender)
-                            gender_results_homo.writerow([ sample , ratio_number, gender])
-                        else:
-                            gender = 'Female'
-                            print(sample, gender)
-                            gender_results_homo.writerow([ sample , ratio_number, gender])
-
-        #Dictionary of gender_homo results:
-        
-        with open(outfile) as gender_homo:
-            dr = csv.DictReader(gender_homo, delimiter=',')
-            dic_gender_homo = {}
-            for row in dr:
-                dic_gender_homo[row['sample']]={}
-                for key, value in row.items():
-                    if not key == 'sample':
-                        dic_gender_homo[row['sample']][key] = value
-
-    print(dic_gender_homo)
-
 
 '''
 

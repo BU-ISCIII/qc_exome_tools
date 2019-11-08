@@ -74,6 +74,19 @@ def rtg_vcfstats_dictionary (vcf_input):
         print(cmd2)
         stats = subprocess.getoutput(str(cmd2))
         
+        #Obtain sample name from vcf files* 
+        #(*necessary when vcfstats are obtained from vcf files with only one sample):
+
+        cmd_name = ["bcftools" , "query" , "-l"]
+        cmd_name.extend(parametro)
+        cmd_name2 = ' '.join(cmd_name)
+        print(cmd_name2)
+        name = subprocess.getoutput(cmd_name2)
+        print('sample names:', name)
+        name = name.split('\n')
+    
+        
+    
         #Dictionary of rtg vcfstats results for each sample:
 
         stats = stats.split('\n')
@@ -85,12 +98,21 @@ def rtg_vcfstats_dictionary (vcf_input):
                 continue
             if 'Sample' in line :
                 found_samplename = True
-                print('found_sample:' , found_samplename)
+                print('found_samples:' , found_samplename)
                 line = line.split(':')
                 sample = line[1].strip()
                 #print(sample)
                 d[sample] = {}
                 continue
+            elif 'Passed Filters' in line :
+                sample = name[0]
+                print('number of vcf samples:', len(name))
+                if len(name) == 1 :
+                    print(sample)
+                    d[sample] = {}
+                    found_samplename = True
+                    print('found sample_unique:' , found_samplename)     
+                    continue
             if found_samplename :
                 line = line.split(':')
                 key=line[0].rstrip()
@@ -166,13 +188,12 @@ if __name__ == '__main__' :
 
     print ('rtg_vcfstats_csv done')
     
-'''   
+  
     #Visualize CSV file using pandas:
      
     import pandas
     panda_file = pandas.read_csv(arguments.out)
     print(panda_file)
-'''    
 
 
 

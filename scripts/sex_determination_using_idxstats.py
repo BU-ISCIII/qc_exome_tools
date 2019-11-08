@@ -12,12 +12,12 @@ import csv
 # Definition of required arguments (bam file, bed file , output path) with argparse module: 
 
 def check_arg(args=None):
-    parser = argparse.ArgumentParser(prog = 'determine_gender_using_idxstats_bedfile_dev7.py',
+    parser = argparse.ArgumentParser(prog = 'sex_determination_using_idxstats.py',
                                      formatter_class=argparse.RawDescriptionHelpFormatter, 
-                                     description= 'Determine gender from bam file of WES using idxstats data and bed file')
+                                     description= 'Determine genetic sex from bam file of WES using idxstats data and bed file')
 
     
-    parser.add_argument('-v, --version', action='version', version='v0.9')
+    parser.add_argument('-v, --version', action='version', version='v0.0')
     parser.add_argument('--bam', required= True, nargs='+' ,
                                     help = 'Bam file including path where is stored.')
     parser.add_argument('--bed', required= True,
@@ -164,9 +164,11 @@ if __name__ == '__main__' :
         write.writerow(['sample', *header])
         for a, b in dic.items():
             write.writerow([a]+[b.get(i, '') for i in header])
-
+'''
     #Visualize CSV file using pandas:
 
     import pandas
     gender_pandas = pandas.read_csv(outfile)
     print(gender_pandas)
+'''
+
