@@ -12,7 +12,8 @@ dependencies:
     - pandas==0.25.1
     - bcftools==1.9
     - rtg-tools==3.10.1
-
+    - samtools==1.9
+    - htslib==1.9
 
 
 

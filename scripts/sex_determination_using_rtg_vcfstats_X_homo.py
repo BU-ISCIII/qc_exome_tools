@@ -82,9 +82,9 @@ if __name__ == '__main__' :
                 found_samplename = True
                 print('encuentre sample:' , found_samplename)
                 line = line.split(':')
-                name = line[1].strip()
-                print(name)
-                d[name] = {}
+                sample = line[1].strip()
+                print(sample)
+                d[sample] = {}
                 continue 
                 
             elif 'Passed Filters' in line :
@@ -101,7 +101,7 @@ if __name__ == '__main__' :
                 key=line[0].rstrip()
                 #print(line)
                 value=line[1].lstrip()
-                d[name][key]= value
+                d[sample][key]= value
         print('Dictionary_VCFstats_ChrX :' , d)
 
         #Determine gender using SNP Het/Homo ratio of Chrx VCF stats:
