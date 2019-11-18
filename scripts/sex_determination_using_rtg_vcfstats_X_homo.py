@@ -119,32 +119,29 @@ if __name__ == '__main__' :
         for sample , stats in d.items():
                 #print("\nSample:", sample)
                 for item in stats:
-                
                     if 'SNP Het/Hom ratio' in item :
                         print(item + ':', stats[item])
                         ratio_str = stats[item]
                         ratio_str = ratio_str.split(' ')
                         #ratio_number = float(ratio_str[0])
                         ratio_number = ratio_str[0]
-                        
                         if '-' in ratio_number:
                             gender = 'unknown'
                             print(sample, gender)
-                        
                         else:
                             ratio_number = float(ratio_str[0])
                             if ratio_number < 1.2 :
                                 gender = 'Male'
                                 print(sample, gender)
-                               
+                                #gender_results_homo.writerow([ sample , ratio_number, gender])
                             else:
                                 gender = 'Female'
-                                print(sample, gende
-                 
+                                print(sample, gender)
+                            #   gender_results_homo.writerow([ sample , ratio_number, gender])
 
                 parameters = ['Gender_HomoChrX_SNP_Het/Hom_ratio', 'Gender_HomoChrX_Gender']
                 values = [ratio_number, gender]
-                
+              
                 #Dictionary of gender_homo results:
 
                 d_gender[sample]= {}
