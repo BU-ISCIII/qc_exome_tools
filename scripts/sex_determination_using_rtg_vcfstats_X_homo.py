@@ -5,7 +5,8 @@ import os
 import csv
 import subprocess
 
-#Necessary: bcftools==1.9  and rtg-tools==3.10.1 (Install Conda environment for QC_Exome Tools: qc_exome_tools.yml)
+#Necessary: bcftools==1.9 , rtg-tools==3.10.1, samtools==1.9 and - htslib==1.9 
+#Install Conda environment for QC_Exome Tools: qc_exome_tools.yml
 
 def check_arg(args=None):
     parser = argparse.ArgumentParser(prog = 'sex_determination_using_rtg_vcfstats_x_homo.py',
@@ -101,7 +102,13 @@ if __name__ == '__main__' :
                 key=line[0].rstrip()
                 #print(line)
                 value=line[1].lstrip()
-                d[sample][key]= value
+                data = value.split(' ')[0]
+                data= data.replace('%', '')
+                if '-'  in data:
+                    data = '-'
+                    #data = value.split(' ')[1]
+                d[sample][key]=  data
+
         print('Dictionary_VCFstats_ChrX :' , d)
 
         #Determine gender using SNP Het/Homo ratio of Chrx VCF stats:
@@ -112,20 +119,28 @@ if __name__ == '__main__' :
         for sample , stats in d.items():
                 #print("\nSample:", sample)
                 for item in stats:
+                
                     if 'SNP Het/Hom ratio' in item :
                         print(item + ':', stats[item])
                         ratio_str = stats[item]
                         ratio_str = ratio_str.split(' ')
-                        ratio_number = float(ratio_str[0])
-
-                        if ratio_number < 1.2 :
-                            gender = 'Male'
+                        #ratio_number = float(ratio_str[0])
+                        ratio_number = ratio_str[0]
+                        
+                        if '-' in ratio_number:
+                            gender = 'unknown'
                             print(sample, gender)
-                            #gender_results_homo.writerow([ sample , ratio_number, gender])
+                        
                         else:
-                            gender = 'Female'
-                            print(sample, gender)
-                            #gender_results_homo.writerow([ sample , ratio_number, gender])
+                            ratio_number = float(ratio_str[0])
+                            if ratio_number < 1.2 :
+                                gender = 'Male'
+                                print(sample, gender)
+                               
+                            else:
+                                gender = 'Female'
+                                print(sample, gende
+                 
 
                 parameters = ['Gender_HomoChrX_SNP_Het/Hom_ratio', 'Gender_HomoChrX_Gender']
                 values = [ratio_number, gender]

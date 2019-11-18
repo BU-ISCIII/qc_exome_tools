@@ -116,13 +116,13 @@ def rtg_vcfstats_dictionary (vcf_input):
             if found_samplename :
                 line = line.split(':')
                 key=line[0].rstrip()
-                #print(line)
                 value=line[1].lstrip()
                 data = value.split(' ')[0]
                 data= data.replace('%', '')
                 if '-'  in data:
-                    data = '0'
-                d[sample]['rtg_vcfstats_' + key]=  float(data) 
+                    #data = '0'
+                    data = value.split(' ')[1]
+                d[sample]['rtg_vcfstats_' + key]=  data 
     
     return(d)
     
@@ -188,12 +188,12 @@ if __name__ == '__main__' :
 
     print ('rtg_vcfstats_csv done')
     
-  
+'''  
     #Visualize CSV file using pandas:
      
     import pandas
     panda_file = pandas.read_csv(arguments.out)
     print(panda_file)
 
-
+'''
 
