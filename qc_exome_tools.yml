@@ -14,6 +14,7 @@ dependencies:
     - rtg-tools==3.10.1
     - samtools==1.9
     - htslib==1.9
+    - plink2=>1.8
 
 
 

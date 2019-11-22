@@ -9,7 +9,7 @@
 
 
 
-#Comprimir vcf a gz:
+#compress vcf file with bgzip:
 bgzip -c ./Escritorio/VCF_test/all_samples_gtpos_fil_annot.vcf > ./Escritorio/VCF_test/all_samples_gtpos_fil_annot.vcf.gz
 tabix -p vcf ./Escritorio/VCF_test/all_samples_gtpos_fil_annot.vcf.gz
 
