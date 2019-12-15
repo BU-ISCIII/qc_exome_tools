@@ -21,9 +21,12 @@ echo $trio
 mkdir $trio
 cd $trio
 
+#To remove multiallelic from vcf files using "bcftools norm"
 
 bcftools norm -Ov -m -any $vcf  | bcftools norm -Ov -f $fasta  >  $trio.norm.vcf
 
+
+#Obtain kinship using plink2 (required v2.0) -make-king-table 
 
 plink2 --vcf $trio.norm.vcf  --make-king-table --allow-extra-chr --out $trio.king.table
 
