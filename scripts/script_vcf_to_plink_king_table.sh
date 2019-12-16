@@ -34,15 +34,12 @@ cd ..
 
 
 
-##
-##example to run this script: 
+#############################################################################
+##Example to run this script: 
 ## bash /home/masterbioinfo/desarrollo/qc_exome_tools/scripts/script_vcf_to_plink_king_table.sh /home/masterbioinfo/EXOME/Data/KING_vcf_pruebas/TRIO047.vcf /home/masterbioinfo/EXOME/Data/hg19/human_g1k_v37.fasta 
-##
+##############################################################################
 
-
-
-
-##
+###############################################################################
 ##Example To run this script in several vcfs:
 ##
 ##find /home/masterbioinfo/EXOME/Data/KING_vcf_pruebas/ -name "*.vcf" > vcfs.txt
@@ -50,6 +47,27 @@ cd ..
 ##cat vcfs.txt | xargs -I % echo "bash /home/masterbioinfo/desarrollo/qc_exome_tools/scripts/script_vcf_to_plink_king_table.sh % /home/masterbioinfo/EXOME/Data/hg19/human_g1k_v37.fasta" > _00_king_test.sh
 ##
 ##bash _00_king_test.sh
-##
+#############################################################################
+
+#############################################################################
+#To obtain kinship between diferents vcf files:
+#Compress vcf to gz: 
+#example:
+# bgzip -c /path to/file.vcf > /path/file.vcf.gz
+# tabix -p vcf /path/file.vcf.gz
+#
+#to merge several vcf.gz:
+#first, obtain a list of vcf.gz files and copy:
+# ls *.vcf.gz |xargs
+#
+#second,merge with vcftools, vcf-merge: 
+#/home/masterbioinfo/Programas/vcftools_0.1.13/perl/vcf-merge TRIO058.vcf.gz TRIO059.vcf.gz (copy list of vcf.gz files) > merge.vcf
+#
+#
+##IMP: NOT remove multiallelic from merge.vcf files using "bcftools norm"(doesnt run fine)
+##Directly Obtain kinship using plink2 (required v2.0) -make-king-table with merge.vcf file
+#example:
+#plink2 --vcf merge.vcf  --make-king-table --allow-extra-chr --out merge.king.table
+#############################################################################
 
 
