@@ -1,10 +1,10 @@
-
 # **qc-exome-tools**
 
 <br>
 
 
 ## INTRODUCTION
+
 
 Scripts for the development of  quality control (QC) tools for the different stages of [BU-ISCIII-exome-pipeline](https://github.com/BU-ISCIII/exome_pipeline):
 
@@ -13,11 +13,14 @@ Scripts for the development of  quality control (QC) tools for the different sta
 * Tools for determing genetic-sex and relationship: useful tools to confirm the pedigree data and to check cross-contamination in the WES samples.
 
 
+<br>
+
 ![image](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/img/imgqctools.png)
 
+<br>
 
 ## INSTALLATION & DEPENDENCIES
-<br>
+
 In order to use these scripts, you can download them or you can also clone this repository from GitHub to create a local copy on your computer (if git is installed):
 
 ```
