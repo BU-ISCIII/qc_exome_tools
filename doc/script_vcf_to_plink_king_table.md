@@ -7,7 +7,7 @@ Bash script to obtain [KING kinship coefficients](http://people.virginia.edu/~wc
 
 ## Usage:
 
-###Dependencies:
+### Dependencies:
 It is necessary **bcftools==1.9** (Install Conda environment with [qc-exome-tools.yml file](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/qc_exome_tools.yml)) and [plink2 v2.0](http://www.cog-genomics.org/plink/2.0/)  **(Important: --make-king-table is only implemented in plink2 version 2.0)** 
 
 
@@ -18,7 +18,7 @@ bash script_vcf_to_plink_king_table.sh <merge.vcf> <fasta>
 ```
 
 
-###Input files:
+### Input files:
 
 
 Mandatory input files:
