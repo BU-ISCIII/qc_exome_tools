@@ -31,8 +31,7 @@ The following input arguments are required:
 ```
   
 ## Output files:
-A dictionary converted to csv and binary file with the [FastQC Basic Statistics](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/
-3%20Analysis%20Modules/1%20Basic%20Statistics.html) of the fastq files:
+A dictionary converted to csv and binary file with the [FastQC Basic Statistics](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/1%20Basic%20Statistics.html) of the fastq files:
 
 ```
 -b /path/to/output_binary_file.bn
@@ -46,7 +45,9 @@ Column data of the csv file:
 * Filename
 * File type
 * Encoding
-* Total Sequences* Sequence length* Sequences flagged as poor quality
+* Total Sequences
+* Sequence length
+* Sequences flagged as poor quality
 * %GC
 
 The output is obtained in a binary file and a csv file
