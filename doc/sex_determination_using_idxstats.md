@@ -1,4 +1,4 @@
-#[sex\_determination\_using\_idxstats.py](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/scripts/sex_determination_using_idxstats.py)
+# [sex\_determination\_using\_idxstats.py](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/scripts/sex_determination_using_idxstats.py)
 
 ## Description:
 Pyhton script to determine the genetic sex examining the read counts in X and Y chromosomes from the whole exome BAM files.
@@ -16,12 +16,12 @@ To determine the genetic sex, if the **(X/Auto ratio) – (Y/Auto ratio)** is eq
 
 ## Usage:
 
-###Dependencies:
+### Dependencies:
 It is necessary **pysam==0.15.3** (We recommend to execute this script installing the conda qc-exome-tools environment with the [qc-exome-tools.yml file](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/qc_exome_tools.yml))  
 
 
 
-###Input files:
+### Input files:
 
 The following input arguments are required:
  
