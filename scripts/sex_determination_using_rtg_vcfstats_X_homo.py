@@ -130,7 +130,8 @@ if __name__ == '__main__' :
                             print(sample, gender)
                         else:
                             ratio_number = float(ratio_str[0])
-                            if ratio_number < 1.2 :
+                            #if ratio_number < 1.2 :
+                            if ratio_number < 0.77 :
                                 gender = 'Male'
                                 print(sample, gender)
                                 #gender_results_homo.writerow([ sample , ratio_number, gender])

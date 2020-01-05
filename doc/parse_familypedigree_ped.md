@@ -1,4 +1,4 @@
-# parse-familypedigree-ped.py
+# [parse\_familypedigree\_ped.py](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/scripts/parse_familypedigree_ped.py)
 
 ## Description:
 Python script to create a Dictionary and csv file with the family_pedigree data obtained from a [ped file](https://gatkforums.broadinstitute.org/gatk/discussion/7696/pedigree-ped-files):
@@ -25,14 +25,18 @@ Affected status should be coded as follows:
 
 ## Input files:
 
-familypedigree.ped files including path where are stored 
+familypedigree.ped files including path where these files are stored 
 
 ```
 --input /path/to/*.ped
 ```
   
 ## Output files:
-A dictionary converted to csv file with the pedigree data.
+A dictionary converted to csv file with the pedigree data:
+
+```
+--out /path/to/dic_pedigree_date.csv
+``` 
 
 Column names of the obtained csv file:
 
@@ -43,9 +47,6 @@ Column names of the obtained csv file:
 *  ped_gender
 *  ped_phenotype
 
-```
---out /path/to/dic_pedigree_date.csv
-``` 
 
 ## Example
 

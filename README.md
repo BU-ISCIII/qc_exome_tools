@@ -6,7 +6,7 @@
 ## INTRODUCTION
 
 
-Scripts for the development of  quality control (QC) tools for the different stages of [BU-ISCIII-exome-pipeline](https://github.com/BU-ISCIII/exome_pipeline):
+[Scripts](https://github.com/BU-ISCIII/qc_exome_tools/tree/develop/scripts) for the development of  quality control (QC) tools for the different stages of [BU-ISCIII-exome-pipeline](https://github.com/BU-ISCIII/exome_pipeline/blob/develop/doc/output.md):
 
 * Tools for parsing statistics obtained in the Preprocesing, Mapping and Variant Calling steps.
 
@@ -80,5 +80,5 @@ conda activate qc_exome_tools
 * [parse-familypedigree-ped.py](doc/parse_familypedigree_ped.md)
 * [script-vcf-to-plink-king-table.sh](doc/script_vcf_to_plink_king_table.md)
 * [sex-determination-using-idxstats.py](doc/sex_determination_using_idxstats.md)
-* [sex-determination-using-rtg-vcfstats-X-homo.py](doc/script_vcf_to_plink_king_tablesex_determination_using_rtg_vcfstats_X_homo.md)
+* [sex-determination-using-rtg-vcfstats-X-homo.py](doc/sex_determination_using_rtg_vcfstats_X_homo.md)
 

@@ -1,4 +1,4 @@
-# parse-rtg-vcfstats.py
+# [parse\_rtg\_vcfstats.py](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/scripts/parse_rtg_vcfstats.py)
 
 ## Description:
 Python script to create a Dictionary and csv file with the [rtg-tools vcfstats](https://cdn.rawgit.com/RealTimeGenomics/rtg-tools/master/installer/resources/tools/RTGOperationsManual/rtg_command_reference.html#vcfstats) statistics obtained from the vcf files of the [BU-ISCIII-exome-pipeline](https://github.com/BU-ISCIII/exome_pipeline):
@@ -58,7 +58,7 @@ Indel/SNP+MNP ratio           : 0.13 (31568/247249)
 
 ## Input files:
 
-The all\_samples\_gtpos\_fil\_annot.vcf files including path where are stored
+The all\_samples\_gtpos\_fil\_annot.vcf files including path where vcf files are stored
 
 ```
  --input /path/to/*_all_samples_gtpos_fil_annot.vcf
@@ -68,6 +68,11 @@ The all\_samples\_gtpos\_fil\_annot.vcf files including path where are stored
 ## Output files:
 
 A dictionary converted to csv file with the rtg vcfstats:
+
+
+```
+ --out /path/to/Results/dic_rtg_vcfstats.csv
+``` 
 
 Column names of the obtained csv file:
 
@@ -83,10 +88,6 @@ Column names of the obtained csv file:
 
 
 
-```
- --out /path/to/Results/dic_rtg_vcfstats.csv
-``` 
-
 ## Example
 **_IMP:_** For this script is necessary **rtg-tools==3.10.1** (Install Conda environment with [qc-exome-tools.yml file](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/qc_exome_tools.yml))
 
@@ -97,7 +98,7 @@ For running in a local computer:
 ```
 python3 /path/to/parse_rtg_vcfstats.py
 --input /path/to/*.vcf
---out /path/to/RESULTS/dic_rtg_vcfstats_31oct2019.csv
+--out /path/to/RESULTS/dic_rtg_vcfstats_date.csv
 
 ```
  
@@ -108,7 +109,7 @@ For submission to the SGE cluster:
 
 qsub -V -b y -j y -cwd -N "parse_rtg_vcfstats_date" -q all.q python3 /path/to/parse_rtg_vcfstats.py
 --input /path/to/*.vcf
---out /path/to/RESULTS/dic_rtg_vcfstats_31oct2019.csv
+--out /path/to/RESULTS/dic_rtg_vcfstats_date.csv
 
 ```
    

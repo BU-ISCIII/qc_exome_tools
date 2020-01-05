@@ -26,12 +26,18 @@ cd $trio
 bcftools norm -Ov -m -any $vcf  | bcftools norm -Ov -f $fasta  >  $trio.norm.vcf
 
 
-#Obtain kinship using plink2 (required v2.0) -make-king-table 
+#Obtain kinship using plink2 (required v2.0) -make-king-table to obtain a table .kin0: 
 
 plink2 --vcf $trio.norm.vcf  --make-king-table --allow-extra-chr --out $trio.king.table
 
 cd ..
 
+############################################################################
+#Optional:
+#to obtain kinship coeficients in a matrix form .king ( to heatmap graphs) using --make-king:
+#plink2 --vcf /path/to/merge.vcf  --make-king --allow-extra-chr --out path/to/results/merge.king.matrix
+
+#############################################################################
 
 
 #############################################################################
@@ -51,6 +57,7 @@ cd ..
 
 #############################################################################
 #To obtain kinship between diferents vcf files:
+
 #Compress vcf to gz: 
 #example:
 # bgzip -c /path to/file.vcf > /path/file.vcf.gz
@@ -68,6 +75,10 @@ cd ..
 ##Directly Obtain kinship using plink2 (required v2.0) -make-king-table with merge.vcf file
 #example:
 #plink2 --vcf merge.vcf  --make-king-table --allow-extra-chr --out merge.king.table
+
+#to obtain kinship coeficients in matrix form .king ( to heatmap graphs):
+#plink2 --vcf /path/to/merge.vcf  --make-king --allow-extra-chr --out path/to/results/merge.king.matrix
+
 #############################################################################
 
 

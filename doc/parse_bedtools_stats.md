@@ -1,7 +1,7 @@
-# parse-bedtools-stats.py
+# [parse\_bedtools\_stats.py](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/scripts/parse_bedtools_stats.py)
 
 ## Description:
-Python script to create a Dictionary and csv file of bedtools statistics from  "exons\_not\_covered\_stats.csv" files obtained with [bedtools](https://bedtools.readthedocs.io/en/latest/content/tools/coverage.html) in [BU-ISCIII-exome-pipeline](https://github.com/BU-ISCIII/exome_pipeline).
+Python script to create a Dictionary and csv file of [bedtools statistics from  "exons\_not\_covered\_stats.csv"](https://github.com/BU-ISCIII/exome_pipeline/tree/develop/templates_TRIO_service/stats/bedtools) files obtained with [bedtools](https://bedtools.readthedocs.io/en/latest/content/tools/coverage.html) in [BU-ISCIII-exome-pipeline](https://github.com/BU-ISCIII/exome_pipeline).
 
 Statistics in "exons\_not\_covered\_stats.csv" files:
 
@@ -13,7 +13,7 @@ Statistics in "exons\_not\_covered\_stats.csv" files:
 
 ## Input files:
 
-"exons\_not\_covered\_stats.csv" files including path where are stored: 
+"exons\_not\_covered\_stats.csv" files including path where these files are stored: 
 
 ```
 --input /path/to/bedtools/*.csv
@@ -23,6 +23,10 @@ Statistics in "exons\_not\_covered\_stats.csv" files:
 ## Output files:
 A dictionary converted to csv file with the exons\_not\_covered\_statistics:
 
+```
+--out /path/to/Results/dic_bedtools_all.csv
+``` 
+
 Column names of the obtained csv file:
 
 * sample
@@ -30,10 +34,6 @@ Column names of the obtained csv file:
 * fr\_covered
 * fr\_NOT\_covered
 
-
-```
---out /path/to/Results/dic_bedtools_all.csv
-``` 
 
 ## Example
 

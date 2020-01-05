@@ -1,4 +1,4 @@
-# parse-bamstats.py
+# [parse\_bamstats.py](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/scripts/parse_bamstats.py)
 
 ## Description:
 Python script to create a Dictionary and csv file with the statistics of bamstats.txt files obtained with [BamUtil](https://genome.sph.umich.edu/wiki/BamUtil:_stats#Basic_.28--basic.29) in [BU-ISCIII-exome-pipeline](https://github.com/BU-ISCIII/exome_pipeline):
@@ -36,7 +36,7 @@ qsub -V -b y -cwd -e sample_bamstat.txt -N BAMUTIL.sample -q all.q bam stats
 
 ## Input files:
 
-bamstats.txt files including path where are stored 
+bamstats.txt files including path where these files are stored 
 
 ```
 --input /path/to/sample_bamstats.txt
@@ -44,9 +44,14 @@ bamstats.txt files including path where are stored
 ```
   
 ## Output files:
-A dictionary converted to csv file with the bamstats.
+A dictionary converted to csv file with the BamUtil Basic statistics:
 
-Column names of the obtained csv file:
+```
+--out /path/to/dic_bamstats_all.csv
+``` 
+
+
+Column names of the obtained csv file are:
 
 * sample
 * bamstats_BasesInMappedReads(e6)
@@ -64,9 +69,6 @@ Column names of the obtained csv file:
 * bamstats_TotalReads(e6)
 
 
-```
---out /path/to/dic_bamstats_all.csv
-``` 
 
 ## Example
 
