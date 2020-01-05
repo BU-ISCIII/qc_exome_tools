@@ -1,4 +1,4 @@
-#[sex\_determination\_using\_rtg\_vcfstats\_X\_homo.py](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/scripts/sex_determination_using_rtg_vcfstats_X_homo.py)
+# [sex\_determination\_using\_rtg\_vcfstats\_X\_homo.py](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/scripts/sex_determination_using_rtg_vcfstats_X_homo.py)
 
 ## Description:
 Pyhton script to determine the genetic sex examining the proportion of hetezygous SNPs (**"SNP Het/Hom ratio"**) in the X chromosome. 
@@ -9,12 +9,12 @@ To determine the genetic sex, if the **"SNP Het/Hom ratio"** of X chomosome vari
 
 ## Usage:
 
-###Dependencies:
+### Dependencies:
 It is necessary **bcftools==1.9** and **rtg-tools==3.10.1** (We recommend to execute this script installing the conda qc-exome-tools environment with the [qc-exome-tools.yml file](https://github.com/BU-ISCIII/qc_exome_tools/blob/develop/qc_exome_tools.yml))  
 
 
 
-###Input files:
+### Input files:
 The vcf files including path where these files are stored:
 
 ``` 
