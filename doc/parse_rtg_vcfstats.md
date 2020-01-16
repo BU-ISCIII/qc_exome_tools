@@ -58,10 +58,10 @@ Indel/SNP+MNP ratio           : 0.13 (31568/247249)
 
 ## Input files:
 
-The all\_samples\_gtpos\_fil\_annot.vcf files including path where vcf files are stored
+The vcf files including path where vcf files are stored
 
 ```
- --input /path/to/*_all_samples_gtpos_fil_annot.vcf
+ --input /path/to/*.vcf
 
 ```
   
@@ -84,7 +84,16 @@ Column names of the obtained csv file:
 * rtg\_vcfstats\_Same as reference
 * rtg\_vcfstats\_Phased Genotypes
 * rtg\_vcfstats\_MNPs
-* rtg\_vcfstats\_MNP Het/Hom ratio* rtg\_vcfstats\_Missing Genotype* rtg\_vcfstats\_Insertions* rtg\_vcfstats\_Insertion/Deletion ratio* rtg\_vcfstats\_Insertion Het/Hom ratio* rtg\_vcfstats\_Indels* rtg\_vcfstats\_Indel/SNP+MNP ratio* rtg\_vcfstats\_Indel Het/Hom ratio* rtg\_vcfstats\_Deletions* rtg\_vcfstats\_Deletion Het/Hom ratio
+* rtg\_vcfstats\_MNP Het/Hom ratio
+* rtg\_vcfstats\_Missing Genotype
+* rtg\_vcfstats\_Insertions
+* rtg\_vcfstats\_Insertion/Deletion ratio
+* rtg\_vcfstats\_Insertion Het/Hom ratio
+* rtg\_vcfstats\_Indels
+* rtg\_vcfstats\_Indel/SNP+MNP ratio
+* rtg\_vcfstats\_Indel Het/Hom ratio
+* rtg\_vcfstats\_Deletions
+* rtg\_vcfstats\_Deletion Het/Hom ratio
 
 
 
