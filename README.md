@@ -1,4 +1,9 @@
-# **qc-exome-tools**
+<img src="docs/images/BU_ISCIII_logo.png" alt="logo" width="300" align="right"/>
+
+[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg)](http://bioconda.github.io/)
+[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+
+# **QC Exome Tools**
 
 <br>
 
